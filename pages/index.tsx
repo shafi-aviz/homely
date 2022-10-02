@@ -1,4 +1,4 @@
-import { Box, Button, Rating, Typography } from '@mui/material';
+import { Box, Button, Grid, Rating, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import type { NextPage } from 'next';
 import Head from 'next/head';
@@ -11,106 +11,22 @@ import {
   EndorserIconContainer,
   GrayBody1Text,
   HowItWorksIconsBox,
-  NavLink,
   PrimaryButton,
   SkyBlueLink,
   SubHeading1,
 } from '../components/styled';
+import {
+  endorserIcons,
+  featuredProperties,
+  footerItems,
+  howItWorksIcons,
+  tabs,
+} from '../util/index.mockData';
 import { bgColor, skyBlueColor } from '../util/theme';
 import { TextAndLink } from '../util/util';
 
 const Home: NextPage = () => {
-  const tabs = [
-    { name: 'Home', href: '/', action: () => {} },
-    { name: 'Features', href: '/', action: () => {} },
-    { name: 'Services', href: '/', action: () => {} },
-    { name: 'Listed', href: '/', action: () => {} },
-    { name: 'Contact', href: '/', action: () => {} },
-  ];
-
-  const endorserIcons = [
-    '/cocacola.svg',
-    '/designdot.svg',
-    '/apple.svg',
-    '/genertel.svg',
-    '/handspring.svg',
-    'blackfire.svg',
-  ];
-
-  const howItWorksIcons = [
-    {
-      icon: '/buyer.svg',
-      heading1: 'Buyer Guides',
-      heading2: 'How to buy',
-    },
-    {
-      icon: '/renter.svg',
-      heading1: 'Renter Guides',
-      heading2: 'How to rent',
-    },
-    {
-      icon: '/seller.svg',
-      heading1: 'Seller Guides',
-      heading2: 'How to sell',
-    },
-  ];
-
-  const featuredProperties: Property[] = [
-    {
-      cost: 20000,
-      address: 'Opp Taj Mahal, Under Charminar, Heaven, Pin:000000',
-      beds: 3,
-      rooms: 3,
-      image: '/house3.png',
-      area: 2000,
-    },
-    {
-      cost: 28500,
-      address: 'Opp Taj Mahal, Under Charminar, Heaven, Pin:000000',
-      beds: 4,
-      rooms: 4,
-      image: '/house2.png',
-      area: 2500,
-    },
-    {
-      cost: 20000,
-      address: 'Opp Taj Mahal, Under Charminar, Heaven, Pin:000000',
-      beds: 3,
-      rooms: 3,
-      image: '/house1.png',
-      area: 1900,
-    },
-  ];
-
-  const footerItems: { header: string; items: TextAndLink[] }[] = [
-    {
-      header: 'Product',
-      items: [
-        { text: 'Listing', link: '/product/listing' },
-        { text: 'Property', link: '/product/property' },
-        { text: 'Agents', link: '/product/agents' },
-        { text: 'Blog', link: '/product/blog' },
-      ],
-    },
-    {
-      header: 'Resources',
-      items: [
-        { text: 'Our Homes', link: '/product/homes' },
-        { text: 'Member Stories', link: '/product/memberStories' },
-        { text: 'Video', link: '/product/vides' },
-        { text: 'Free Trial', link: '/product/trial' },
-      ],
-    },
-    {
-      header: 'Company',
-      items: [
-        { text: 'Partnership', link: '/product/listing' },
-        { text: 'Terms Of Use', link: '/product/property' },
-        { text: 'Privacy', link: '/product/agents' },
-        { text: 'Sitemap', link: '/product/blog' },
-      ],
-    },
-  ];
+  //
 
   const BoldTextWithSubHeading: React.FC<{
     title: string;
@@ -154,38 +70,10 @@ const Home: NextPage = () => {
         <BaseBox>
           <Box
             display="flex"
-            alignItems="center"
-            justifyContent="start"
-            gap={8}
-            paddingTop={1.5}
-          >
-            <Logo />
-
-            <Box display="flex" gap={3} alignItems="center">
-              {tabs.map((tab) => (
-                <Link href={tab.href}>
-                  <NavLink>
-                    <GrayBody1Text color={grey[800]}>
-                      {tab.name}
-                    </GrayBody1Text>
-                  </NavLink>
-                </Link>
-              ))}
-            </Box>
-            <Box marginLeft="auto" display="flex" gap={0}>
-              <PrimaryButton>Login</PrimaryButton>
-              <PrimaryButton variant="contained" size="small">
-                Register
-              </PrimaryButton>
-            </Box>
-          </Box>
-
-          <Box
-            display="flex"
             height="450px"
             alignItems="stretch"
             justifyContent="space-between"
-            marginTop={3}
+            // paddingTop={3}
           >
             <Box
               width="60%"
@@ -254,6 +142,7 @@ const Home: NextPage = () => {
             justifyContent="space-between"
             alignItems="center"
             marginTop={5}
+            sx={{ opacity: 0.6 }}
           >
             {endorserIcons.map((icon) => (
               <EndorserIconContainer>
@@ -344,11 +233,13 @@ const Home: NextPage = () => {
             </Box>
             <SkyBlueLink>View All Properties →</SkyBlueLink>
           </Box>
-          <Box display="flex" justifyContent="space-between">
+          <Grid container spacing={3}>
             {featuredProperties.map((property) => (
-              <ProductCard property={property} />
+              <Grid item xs={4}>
+                <ProductCard property={property} />
+              </Grid>
             ))}
-          </Box>
+          </Grid>
           <Box
             display="flex"
             justifyContent={'space-between'}

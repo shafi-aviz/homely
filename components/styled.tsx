@@ -1,19 +1,37 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, TextField, Typography } from '@mui/material';
 import { styled } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { color } from '@mui/system';
 import { skyBlueColor } from '../util/theme';
 
-export const BaseBox = styled(Box)(({ theme }) => ({
-  padding: `0 ${theme.spacing(7)}`,
+export const Heading = styled(Typography)(({ theme }) => ({
+  color: theme.palette.primary.main,
+  fontWeight: 700,
 }));
 
-export const NavLink = styled('a')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  fontWeight: 500,
-  color: grey[800],
-}));
+export const BaseBox = styled(Box)<{ background?: string }>(
+  ({ background, theme }) => ({
+    padding: `0 ${theme.spacing(7)}`,
+
+    ...(background && { backgroundColor: background }),
+  })
+);
+
+export const NavLink = styled('a')<{ isActive?: boolean }>(
+  ({ isActive = false, theme }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    fontWeight: 500,
+    color: grey[800],
+    padding: `${theme.spacing(0.5)} ${theme.spacing(2)}`,
+    borderRadius: '9px',
+
+    ...(isActive && {
+      backgroundColor: theme.palette.primary.main,
+      ['& p']: { color: '#fff' },
+    }),
+  })
+);
 
 export const PrimaryButton = styled(Button)(({ theme }) => ({
   padding: `${theme.spacing(1)} ${theme.spacing(2.75)}`,
@@ -47,15 +65,30 @@ export const HowItWorksIconsBox = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const SubHeading1 = styled(Typography)(({ theme }) => ({
+export const SubHeading1 = styled(Heading)(({ theme }) => ({
   marginBottom: 3,
-  fontWeight: 700,
-  color: theme.palette.text.primary,
+  // fontWeight: 700,
+  // color: theme.palette.text.primary,
   fontSize: '42px',
+}));
+
+export const SubHeading2 = styled(Heading)(({ theme }) => ({
+  fontSize: '24px',
+  fontWeight: 500,
+}));
+
+export const SubHeading3 = styled(Heading)(({ theme }) => ({
+  fontSize: '20px',
 }));
 
 export const SkyBlueLink = styled(Typography)(({ theme }) => ({
   color: skyBlueColor,
   fontSize: '20px',
   fontWeight: 700,
+}));
+
+export const InputField = styled(TextField)(({ theme }) => ({
+  '& input': {
+    fontSize: '14px',
+  },
 }));

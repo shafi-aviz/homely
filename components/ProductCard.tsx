@@ -1,6 +1,6 @@
 import { Box, Icon, SvgIconTypeMap, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { GrayBody1Text } from './styled';
 import {
   CropFreeOutlined,
@@ -10,6 +10,7 @@ import {
 import { OverridableComponent } from '@mui/material/OverridableComponent';
 import { skyBlueColor } from '../util/theme';
 import { trimString } from '../util/util';
+import screenWidthUtil from '../hooks/screenWidhtUtil';
 
 export type Property = {
   image: string;
@@ -20,9 +21,12 @@ export type Property = {
   area: number;
 };
 
-const ProductCard: React.FC<{ property: Property }> = ({
-  property: { image, cost, address, beds, rooms, area },
-}) => {
+const ProductCard: React.FC<{
+  property: Property;
+}> = ({ property: { image, cost, address, beds, rooms, area } }) => {
+  //
+  //
+
   const IconAndMetric: React.FC<{
     Icon: OverridableComponent<SvgIconTypeMap>;
     text: string;
@@ -39,8 +43,9 @@ const ProductCard: React.FC<{ property: Property }> = ({
       </Typography>
     </Box>
   );
+
   return (
-    <Box width="325px" bgcolor="#fff" borderRadius="9px">
+    <Box width="100%" bgcolor="#fff" borderRadius="9px">
       <Box width="100%">
         <img
           width="100%"
