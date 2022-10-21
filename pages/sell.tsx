@@ -12,6 +12,8 @@ import {
   SubHeading3,
 } from '../components/styled';
 import { bgColor } from '../util/theme';
+import { useAppDispatch } from '../store/store';
+import { addProperty } from '../store/productAPI';
 
 type PropertyField =
   | 'cost'
@@ -19,12 +21,10 @@ type PropertyField =
   | 'rooms'
   | 'area'
   | 'owner'
-  | 'door'
-  | 'locality'
-  | 'town'
-  | 'state'
+  | 'address'
   | 'country'
-  | 'pin';
+  | 'pin'
+  | 'id';
 
 type PropertyDetail = {
   title: string;
@@ -32,6 +32,8 @@ type PropertyDetail = {
 };
 
 const Sell: NextPage = () => {
+  const dispatch = useAppDispatch();
+
   const FormEntry: React.FC<{
     title: string;
     field: string;
@@ -68,14 +70,15 @@ const Sell: NextPage = () => {
       area: 0,
       owner: '',
       rooms: '',
-      door: '',
-      locality: '',
-      town: '',
-      state: '',
       country: '',
       pin: '',
+      id: '',
+      address: '',
     },
-    onSubmit: (values) => {},
+    onSubmit: (values) => {
+      console.log({ ...values });
+      dispatch(addProperty.initiate(values));
+    },
   });
 
   const propertyDetails: PropertyDetail[] = [
@@ -84,14 +87,7 @@ const Sell: NextPage = () => {
     { field: 'rooms', title: 'Rooms' },
     { field: 'area', title: 'Area' },
     { field: 'owner', title: 'Owner' },
-  ];
-
-  const addressDetails: PropertyDetail[] = [
-    { field: 'door', title: 'Door' },
-    { field: 'locality', title: 'Locality' },
-    { field: 'town', title: 'Town' },
-    { field: 'state', title: 'State' },
-    { field: 'country', title: 'Country' },
+    { field: 'address', title: 'Address' },
     { field: 'pin', title: 'Pin' },
   ];
 
@@ -139,19 +135,10 @@ const Sell: NextPage = () => {
           </Box>
         </Grid>
         <Grid item xs={4}>
-          <Grid container rowSpacing={2}>
-            {addressDetails.map((item) => (
-              <FormEntry
-                title={item.title}
-                value={formik.values[item.field]}
-                handleChange={formik.handleChange}
-                field={item.field}
-              />
-            ))}
-          </Grid>
-        </Grid>
-        <Grid item xs={4}>
-          <PrimaryButton variant="contained">
+          <PrimaryButton
+            variant="contained"
+            onClick={() => formik.handleSubmit()}
+          >
             Submit Details
           </PrimaryButton>
         </Grid>

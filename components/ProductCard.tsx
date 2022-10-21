@@ -19,6 +19,7 @@ export type Property = {
   beds: number;
   rooms: number;
   area: number;
+  id?: number;
 };
 
 const ProductCard: React.FC<{

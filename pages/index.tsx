@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Logo from '../components/Logo';
 import ProductCard, { Property } from '../components/ProductCard';
+import sql from '../db/connection';
 import {
   BaseBox,
   EndorserIconContainer,
@@ -16,6 +17,13 @@ import {
   SubHeading1,
 } from '../components/styled';
 import {
+  getRunningOperationPromises,
+  getProperties,
+  useGetPropertiesQuery,
+} from '../store/productAPI';
+import wrapper from '../store/store';
+import Wrapper from '../store/store';
+import {
   endorserIcons,
   featuredProperties,
   footerItems,
@@ -25,8 +33,13 @@ import {
 import { bgColor, skyBlueColor } from '../util/theme';
 import { TextAndLink } from '../util/util';
 
-const Home: NextPage = () => {
+const Home: NextPage = (props) => {
   //
+
+  console.log({ props });
+  // const { isLoading, error, data } = useGetUsersQuery({});
+
+  // if (!isLoading) console.log(data);
 
   const BoldTextWithSubHeading: React.FC<{
     title: string;
@@ -303,3 +316,12 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) => async (context) => {
+    store.dispatch(getProperties.initiate(null));
+
+    await Promise.all(getRunningOperationPromises());
+    return { props: { data: 'From SSR' } };
+  }
+);
